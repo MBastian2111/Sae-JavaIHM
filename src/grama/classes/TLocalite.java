@@ -33,8 +33,8 @@ public class TLocalite {
         return tChemin;
     }
 
-    public void setVoisin(TChemin voisin) {
-        this.tChemin = voisin;
+    public void setVoisin(TListe modVoisin) {
+        this.tChemin = modVoisin;
     }
 
 

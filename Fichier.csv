@@ -1,0 +1,13 @@
+V, La Tour-en-jarez:A,1::L, Cinéma le royal;D,1::V, Villars;;;
+V, Villars:D,2::V, Saint-Etienne;D,1::V, La Tour-en-jarez;;;
+V, Saint-Etienne:A,2::R, Chez les fondus;N,1::R, L'atelier des Augustins;D,2::V, Villars;;
+R, Chez les fondus:A,2::V, Saint-Etienne;N,2::L, Cinéma le royal;;;
+L, 4Gamer:A,3::L, Cinéma le royal;N,3::V, Andrézieux-Bouthéon;;;
+L, Cinéma le royal:N,2::R, Chez les fondus;A,1::V, La Tour-en-jarez;A,3::L, 4Gamer;N,4::L, Musée de la Mine;
+L, Musée de la Mine:N,4::L, Cinéma le royal;N,5:V, Andrézieux-Bouthéon;N,6::V, Firminy;D,3::V, Saint-Chamond;
+V, Andrézieux-Bouthéon:N,3::L, 4Gamer;N,5:L, Musée de la Mine;D,4::V, Vaulx-en-Velin;;
+V, Firminy:N,6::L, Musée de la Mine;A,5::V, Châteauneuf;;;
+V, Chateauneuf:A,5::V, Firminy;D,5::R, La Loco;;;
+R, La Loco:D,5::V, Châteauneuf;D,6::R, L'atelier des Augustins;D,7::V, Unieux;;
+V, Unieux:D,7::R, La Loco;D,8::R, L'atelier des Augustins;A,6::V, Saint-Chamond;N,6::R, Nota Bene;A,7::V, Villeurbanne
+V, Saint-Chamond:D,3::L, Musée de la Mine;A,7::V, La Ricamarie;D,8::R, Nota Bene;A,6::V, Unieux;
