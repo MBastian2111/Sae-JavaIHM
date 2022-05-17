@@ -5,6 +5,7 @@
  */
 package sae.function;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import sae.donnees.TChemin;
 import sae.donnees.TLocalite;
@@ -67,7 +68,49 @@ public class Function {
            
     }
     
-    public void distance1 (String distance){
-        
+    
+    //Ne gère pas encore les répétitions
+    public void distance1 (String lieu){
+        int num = 0;
+        while(liste.size() > num){
+            TLocalite ptliste = liste.get(num);
+            if (ptliste.getNom().equals(lieu)){
+                int nbrVois = 0;
+                while (ptliste.getVoisin().size() > nbrVois){
+                    System.out.println("Localité à 1-distance de "+ lieu +" :");
+                    TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
+                    if (ptlisteroute.getDistance() == 1){
+                       System.out.println(ptlisteroute.getArrive());
+                    } else {
+                        System.out.println("Aucune localité à 1-distance");
+                    }
+                }
+                nbrVois++;
+            } 
+        }
+        num++;
     }
+    
+    
+    
+    /**public void distance2 (String lieu){
+        int num = 0;
+        while(liste.size() > num){
+            TLocalite ptliste = liste.get(num);
+            if (ptliste.getNom().equals(lieu)){
+                int nbrVois = 0;
+                while (ptliste.getVoisin().size() > nbrVois){
+                    System.out.println("Localité à 2-distance de "+ lieu +" :");
+                    TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
+                    if (ptlisteroute.getDistance() == 2){
+                       System.out.println(ptlisteroute.getArrive());
+                    } else {
+                        System.out.println("Aucune localité à 2-distance");
+                    }
+                }
+                nbrVois++;
+            } 
+        }
+        num++;
+    }*/
 }
