@@ -275,15 +275,11 @@ public class Function {
             TLocalite ptliste = liste.get(num);
             if (ptliste.getNom().equals(lieu)){
                 int nbrVois = 0;
+                System.out.println("Localité à 1-distance de "+ lieu +" :");
                 while (ptliste.getVoisin().size() > nbrVois){
-                    System.out.println("Localité à 1-distance de "+ lieu +" :");
                     TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
-                    if (ptlisteroute.getDistance() == 1){
-                       System.out.println(ptlisteroute.getArrive());
-                       nombre++;
-                    } else {
-                        System.out.println("Aucune localité à 1-distance");
-                    }
+                    System.out.println(ptlisteroute.getArrive());
+                    nombre++;
                 }
                 nbrVois++;
             } 
@@ -292,22 +288,56 @@ public class Function {
         num++;
     }
     
-    //marche pas
-    public void distance1 (String lieu, String typerecherche){
+    //Méthode permettant d'afficher toutes les localités selon leur type demandé à un distance du lieu demandé
+    public void distance1 (String lieu, String locaChercher){
         int num = 0;
         while(liste.size() > num){
             TLocalite ptliste = liste.get(num);
             if (ptliste.getNom().equals(lieu)){
                 int nbrVois = 0;
                 while (ptliste.getVoisin().size() > nbrVois){
-                    System.out.println(typerecherche + " à 1-distance de "+ lieu +" :");
+                    System.out.println(locaChercher + " à 1-distance de "+ lieu +" :");
                     TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
-                    
-                    if (ptlisteroute.getDistance() == 1){
-                       System.out.println(ptlisteroute.getArrive());
-                    } else {
-                        System.out.println("Aucune localité à 1-distance");
+                    String chercher = ptlisteroute.getArrive();
+                    int parcours = 0;
+                    while (liste.size() > parcours){
+                        TLocalite ptliste2 = liste.get(parcours);
+                        if (ptliste2.getType().equals(locaChercher) && ptliste2.getNom().equals(chercher)){
+                            System.out.println(ptlisteroute.getArrive());
+                        } 
                     }
+                    parcours++;
+                }
+                nbrVois++;
+            } 
+        }
+        num++;
+    }
+    
+    
+    //Méthode permettant d'afficher
+    public void distance2 (String lieu){
+        int num = 0;
+        while(liste.size() > num){
+            TLocalite ptliste = liste.get(num);
+            if (ptliste.getNom().equals(lieu)){
+                int nbrVois = 0;
+                while (ptliste.getVoisin().size() > nbrVois){
+                    int num2 = 0;
+                    TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
+                    String distDeux = ptlisteroute.getArrive();
+                    while (liste.size() > num2){
+                        TLocalite ptliste2 = liste.get(num2);
+                        if (ptliste2.getNom().equals(distDeux)){
+                            int nbrVois2 = 0;
+                            while (ptliste.getVoisin().size() > nbrVois2){
+                                TChemin ptlisteroute2 = ptliste2.getVoisin().get(nbrVois2);
+                                System.out.println(ptlisteroute2.getArrive());
+                            }
+                            nbrVois2++;
+                        } 
+                    }
+                    num2++;
                 }
                 nbrVois++;
             } 
@@ -317,7 +347,7 @@ public class Function {
     
     
     
-    /**public void distance2 (String lieu){
+    public void distance2 (String lieu, String locaChercher){
         int num = 0;
         while(liste.size() > num){
             TLocalite ptliste = liste.get(num);
@@ -326,21 +356,32 @@ public class Function {
                 while (ptliste.getVoisin().size() > nbrVois){
                     int num2 = 0;
                     TChemin ptlisteroute = ptliste.getVoisin().get(nbrVois);
-                    while (ptlisteroute.size() > num2){
-                        
+                    String distDeux = ptlisteroute.getArrive();
+                    while (liste.size() > num2){
+                        TLocalite ptliste2 = liste.get(num2);
+                        if (ptliste2.getNom().equals(distDeux)){
+                            int nbrVois2 = 0;
+                            while (ptliste.getVoisin().size() > nbrVois2){
+                                TChemin ptlisteroute2 = ptliste2.getVoisin().get(nbrVois2);
+                                String chercher = ptlisteroute2.getArrive();
+                                int parcours = 0;
+                                while (liste.size() > parcours){
+                                    TLocalite ptliste3 = liste.get(parcours);
+                                    if (ptliste3.getNom().equals(chercher) && ptliste3.getType().equals(locaChercher)){
+                                        System.out.println(ptliste3.getNom());
+                                    }
+                                }
+                                parcours++;
+                            }
+                            nbrVois2++;
+                        } 
                     }
-                    System.out.println("Localité à 1-distance de "+ lieu +" :");
-                    
-                    if (ptlisteroute.getDistance() == 1){
-                       System.out.println(ptlisteroute.getArrive());
-                    } else {
-                        System.out.println("Aucune localité à 1-distance");
-                    }
+                    num2++;
                 }
                 nbrVois++;
             } 
         }
         num++;
-    }*/
+    }
     
 }
