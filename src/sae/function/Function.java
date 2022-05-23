@@ -5,6 +5,7 @@
  */
 package sae.function;
 
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import sae.donnees.TChemin;
@@ -403,8 +404,9 @@ public class Function {
     
     
     //Méthode permettant d'afficher les localités à 2 ditances du lieu demandé
-    public void distance2 (String lieu){
+    public ArrayList<String> distance2 (String lieu){
         int num = 0;
+        ArrayList<String> res = null;
         //Permet le parcours de la liste
         while(liste.size() > num){
             //Création d'un pointeur pouvant prendre les localité de la liste
@@ -430,8 +432,8 @@ public class Function {
                             while (ptliste.getVoisin().size() > nbrVois2){
                                 //Création d'un pointeur pouvant parcourir les chemins de la localité pointé par ptliste2
                                 TChemin ptlisteroute2 = ptliste2.getVoisin().get(nbrVois2);
-                                //Affichage de l'arrivé du chemin pointé par ptlisteroute2 (affiche du nom du voisin de la localité)
-                                System.out.println(ptlisteroute2.getArrive());
+                                //Ajout à l'arraylist de l'arrivé du chemin pointé par ptlisteroute2 (affiche du nom du voisin de la localité)
+                                res.add(ptlisteroute2.getArrive());
                             }
                             nbrVois2++;
                         } 
@@ -442,12 +444,14 @@ public class Function {
             } 
         }
         num++;
+        return res;
     }
     
     
     //Méthode permettant d'afficher les localités selon le type cherché à 2 ditances du lieu demandé
-    public void distance2 (String lieu, String locaChercher){
+    public ArrayList<String> distance2 (String lieu, String locaChercher){
         int num = 0;
+        ArrayList<String> res = null;
         //Permet le parcours de la liste
         while(liste.size() > num){
             //Création d'un pointeur pouvant prendre les localité de la liste
@@ -482,8 +486,8 @@ public class Function {
                                     TLocalite ptliste3 = liste.get(parcours);
                                     //Vérifie si la localité pointé par ptliste3 est identique au voisin cherché et si son type est égale au type cherché
                                     if (ptliste3.getNom().equals(chercher) && ptliste3.getType().equals(locaChercher)){
-                                        //Affichage du nom de la localité pointé par ptliste3
-                                        System.out.println(ptliste3.getNom());
+                                        //Ajout à l'arrylist de la localité pointé par ptliste3
+                                        res.add(ptliste3.getNom());
                                     }
                                 }
                                 parcours++;
@@ -497,6 +501,15 @@ public class Function {
             } 
         }
         num++;
+        return res;
+    }
+    
+    
+    
+    //Méthode permettant de vérifier si deux localités sont bien à deux distances
+    public boolean vérificationdistance2(String localite1, String localite2){
+        ArrayList<String> list = distance2(localite1);
+        return list.contains(localite2);
     }
     
 }
