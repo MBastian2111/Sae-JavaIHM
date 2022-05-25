@@ -7,6 +7,7 @@ package sae.Ecran;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -18,18 +19,25 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
      * Creates new form Ecran1
      */
     public Ecran1() {
-        
-        
+
         initComponents();
         Dimension dimension = new Dimension(mapDemo.getWidth(), mapDemo.getHeight());
         JPanel slate = new Slate(dimension, this);
         mapDemo.removeAll();
         mapDemo.add(slate);
         mapDemo.revalidate();
-        
-        
+        this.j2d.setVisible(false);
+        this.j3d.setVisible(false);
+        this.jVoisin.setVisible(false);
+        this.jCheckBox4.setVisible(false);
+        this.jCheckBox5.setVisible(false);
+        this.jCheckBox6.setVisible(false);
+        this.jCheckBox7.setVisible(false);
+        this.jCheckBox8.setVisible(false);
+        this.jCheckBox9.setVisible(false);
+
         this.pack();
-        
+
     }
 
     /**
@@ -43,11 +51,22 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
 
         controlPanel = new javax.swing.JPanel();
         filterPanel = new javax.swing.JPanel();
-        distanceComboBox = new javax.swing.JComboBox<>();
-        typesComboBox = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        searchPanel = new javax.swing.JTextPane();
         positionLabel = new javax.swing.JLabel();
+        jShowDistance = new javax.swing.JToggleButton();
+        jShowTypeRoute = new javax.swing.JToggleButton();
+        jShowTypeVille = new javax.swing.JToggleButton();
+        jVoisin = new javax.swing.JCheckBox();
+        j2d = new javax.swing.JCheckBox();
+        j3d = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox8 = new javax.swing.JCheckBox();
+        jCheckBox9 = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         mapPanel = new javax.swing.JPanel();
         mapDemo = new javax.swing.JPanel();
 
@@ -56,13 +75,57 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new java.awt.BorderLayout());
 
-        distanceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        typesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jScrollPane1.setViewportView(searchPanel);
-
         positionLabel.setText("X/Y");
+
+        jShowDistance.setText("Montrer distance");
+        jShowDistance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jShowDistanceActionPerformed(evt);
+            }
+        });
+
+        jShowTypeRoute.setText("Montrer routes");
+        jShowTypeRoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jShowTypeRouteActionPerformed(evt);
+            }
+        });
+
+        jShowTypeVille.setText("Montrer villes");
+        jShowTypeVille.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jShowTypeVilleActionPerformed(evt);
+            }
+        });
+
+        jVoisin.setText("Voisins");
+
+        j2d.setText("2 d");
+
+        j3d.setText("3 d");
+
+        jCheckBox4.setText("N");
+
+        jCheckBox5.setText("D");
+
+        jCheckBox6.setText("A");
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox7.setText("V");
+
+        jCheckBox8.setText("R");
+
+        jCheckBox9.setText("L");
+
+        jLabel1.setText(":");
+
+        jLabel2.setText(":");
+
+        jLabel3.setText(":");
 
         javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
         filterPanel.setLayout(filterPanelLayout);
@@ -71,25 +134,67 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
             .addGroup(filterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(distanceComboBox, 0, 88, Short.MAX_VALUE)
-                    .addComponent(typesComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(positionLabel)
                     .addGroup(filterPanelLayout.createSequentialGroup()
-                        .addComponent(positionLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jShowTypeVille, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jShowTypeRoute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jShowDistance, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(4, 4, 4)
+                        .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(filterPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox6))
+                            .addGroup(filterPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox9))
+                            .addGroup(filterPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jVoisin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(j2d)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(j3d)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         filterPanelLayout.setVerticalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(distanceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jShowDistance)
+                    .addComponent(jVoisin)
+                    .addComponent(j2d)
+                    .addComponent(j3d)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(typesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jShowTypeRoute)
+                    .addComponent(jCheckBox4)
+                    .addComponent(jCheckBox5)
+                    .addComponent(jCheckBox6)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(positionLabel))
+                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jShowTypeVille)
+                    .addComponent(jCheckBox7)
+                    .addComponent(jCheckBox8)
+                    .addComponent(jCheckBox9)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addComponent(positionLabel)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
@@ -124,6 +229,46 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
+
+    private void jShowDistanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowDistanceActionPerformed
+        if (!jShowDistance.isSelected()) {
+            jVoisin.setVisible(false);
+            j2d.setVisible(false);
+            j3d.setVisible(false);
+        } else {
+            jVoisin.setVisible(true);
+            j2d.setVisible(true);
+            j3d.setVisible(true);
+        }
+    }//GEN-LAST:event_jShowDistanceActionPerformed
+
+    private void jShowTypeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowTypeRouteActionPerformed
+        if (!jShowTypeRoute.isSelected()) {
+            jCheckBox4.setVisible(false);
+            jCheckBox5.setVisible(false);
+            jCheckBox6.setVisible(false);
+        } else {
+            jCheckBox4.setVisible(true);
+            jCheckBox5.setVisible(true);
+            jCheckBox6.setVisible(true);
+        }
+    }//GEN-LAST:event_jShowTypeRouteActionPerformed
+
+    private void jShowTypeVilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowTypeVilleActionPerformed
+        if (!jShowTypeRoute.isSelected()) {
+            jCheckBox7.setVisible(false);
+            jCheckBox8.setVisible(false);
+            jCheckBox9.setVisible(false);
+        } else {
+            jCheckBox7.setVisible(true);
+            jCheckBox8.setVisible(true);
+            jCheckBox9.setVisible(true);
+        }
+    }//GEN-LAST:event_jShowTypeVilleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,27 +307,38 @@ public class Ecran1 extends javax.swing.JFrame implements IDrawer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
-    private javax.swing.JComboBox<String> distanceComboBox;
     private javax.swing.JPanel filterPanel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JCheckBox j2d;
+    private javax.swing.JCheckBox j3d;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JToggleButton jShowDistance;
+    private javax.swing.JToggleButton jShowTypeRoute;
+    private javax.swing.JToggleButton jShowTypeVille;
+    private javax.swing.JCheckBox jVoisin;
     private javax.swing.JPanel mapDemo;
     private javax.swing.JPanel mapPanel;
     private javax.swing.JLabel positionLabel;
-    private javax.swing.JTextPane searchPanel;
-    private javax.swing.JComboBox<String> typesComboBox;
     // End of variables declaration//GEN-END:variables
-
 
     /**
      * Lorsque la souris se déplace sur le {@link Slate}
+     *
      * @param point Correspond à la nouvelle position de la souris
      */
     @Override
     public void mouseAt(Point point) {
-        if(point != null){
+        if (point != null) {
             positionLabel.setVisible(true);
             positionLabel.setText("X:Y = " + point.x + ":" + point.y);
-        }else{
+        } else {
             positionLabel.setVisible(false);
         }
     }
