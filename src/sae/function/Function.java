@@ -7,7 +7,9 @@ package sae.function;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import sae.donnees.TChemin;
 import sae.donnees.TLocalite;
 
@@ -72,6 +74,8 @@ public class Function {
     }
     
     
+    
+    
     /**
      * Méthode permettant de retourner le nombre de loisirs
      * @return nombre qui s'incrémente au fur et à mesure que des loisirs sont trouvés dans la liste
@@ -93,6 +97,8 @@ public class Function {
     }
     
     
+    
+    
     /**
      * Méthode permettant de retourner le nombre de villes
      * @return nombre qui s'incrémente au fur et à mesure que des villes sont trouvées dans la liste
@@ -112,6 +118,9 @@ public class Function {
         }
         return nombre;
     }
+    
+    
+    
     
     /**
      * Méthode permettant de compter le nombre de nationales
@@ -140,6 +149,8 @@ public class Function {
         return nombre;
     }
     
+    
+    
     /**
      * Méthode permettant de compter le nombre de autoroutes
      * @return nombre qui s'incrémente au fur et à mesure que des autoroutes sont trouvées dans la liste
@@ -166,6 +177,8 @@ public class Function {
         }
         return nombre;
     }
+    
+    
     
     /**
      * Méthode permettant de compter le nombre de départementale
@@ -220,6 +233,7 @@ public class Function {
     }
     
     
+    
     //Méthode permettant d'afficher tous les liens qui sont des autoroutes
     public void afficheAutoroute(){
         int num = 0;
@@ -242,6 +256,8 @@ public class Function {
         num ++;   
         }
     }
+    
+    
     
     
     //Méthode permettant d'afficher tous les liens qui sont des départementales
@@ -269,6 +285,7 @@ public class Function {
     
     
     
+    
     //Méthode permettant d'afficher toutes les localités qui sont des restaurants
     public void afficheRestaurant(){
         int num = 0;
@@ -286,6 +303,8 @@ public class Function {
         }
            
     }
+    
+    
     
     //Méthode permettant d'afficher toutes les localités qui sont des loisirs
     public void afficheLoisir(){
@@ -305,6 +324,8 @@ public class Function {
            
     }
     
+    
+    
     //Méthode permettant d'afficher toutes les localités qui sont des villes
     public void afficheVille(){
         int num = 0;
@@ -323,6 +344,8 @@ public class Function {
            
     }
     
+    
+    
     //Méthode permettant de renvoyer un lieu recherché 
     public TLocalite RenvoiLocalite(String localite){
         int num = 0;
@@ -338,6 +361,8 @@ public class Function {
         }
         return null;
     }
+    
+    
     
     //Méthode permettant d'afficher toutes les localités se trouvant à un seul lien d'écart du lieu demandé
     public void distance1 (String lieu){
@@ -448,6 +473,7 @@ public class Function {
     }
     
     
+    
     //Méthode permettant d'afficher les localités selon le type cherché à 2 ditances du lieu demandé
     public ArrayList<String> distance2 (String lieu, String locaChercher){
         int num = 0;
@@ -506,10 +532,115 @@ public class Function {
     
     
     
+    
     //Méthode permettant de vérifier si deux localités sont bien à deux distances
     public boolean vérificationdistance2(String localite1, String localite2){
         ArrayList<String> list = distance2(localite1);
         return list.contains(localite2);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*public void comparerDeuxVilles (String villeA, String villeB){
+        String type1 = "Ville";
+        int ouvertA = distance2 (villeA, type1);
+    }*/
+    
+    
+ 
+     
+
+    
+    
+
+    
+
+    /*public ArrayList<String> dijkstra(TLocalite StartSm, TLocalite EndSm) {
+
+        ArrayList<String> path = new ArrayList<>();
+        ArrayList<TLocalite> restant = new ArrayList<TLocalite>();
+        for (int i = 0; i < liste.size(); i++) {
+            restant.add(liste.get(i).getValue());
+        }
+        Map<String, Double> distance = new HashMap<>();
+        Map<String, String> precedent = new HashMap<>();
+        TLocalite minimalNode;
+        String actuel;
+        initializeDistances(distance, StartSm);
+        precedent.put(StartSm.getNom(), null);
+
+        while (!restant.isEmpty()) {
+            minimalNode = CellWithMinimalDistance(distance, restant);
+
+            restant.remove(liste.get(indexSm(minimalNode)).getOrigin().getValue());
+            Cell tmp = liste.get(indexSm(minimalNode)).getOrigin();
+
+            for (int i = 0; i < liste.get(indexSm(minimalNode)).lenghtList(); i++) {
+                release(distance, precedent, minimalNode, tmp);
+                tmp = tmp.getSuivant();
+            }
+        }
+
+        if (distance.get(EndSm.getName()) != Double.POSITIVE_INFINITY) {
+
+            path.add(EndSm.getName());
+            actuel = EndSm.getName();
+
+            while (precedent.get(actuel) != null) {
+                path.add(0, precedent.get(actuel));
+                actuel = precedent.get(actuel);
+            }
+        }
+
+        return path;
+    }*/
+
+    // Retourne la ville la plus ouverte à 2 de distances en fonction du mode (0 = ville, 1 = restaurant, ...)
+    /*public TLocalite mostOpen(TLocalite sm1, TLocalite sm2, int mode) {
+
+        ArrayList<String> alreadyCheck = new ArrayList<String>();
+        int[] counter = {0, 0};
+
+        Liste[] ls = {liste.get(indexSm(sm1)), liste.get(indexSm(sm2))};
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < ls[i].lenghtList(); j++) {
+                if (ls[i].getACell(j).getValue().getType() == mode
+                        && !alreadyCheck.contains(ls[i].getACell(j).getValue().getName())) {
+                    alreadyCheck.add((ls[i].getACell(j).getValue().getName()));
+                    counter[i]++;
+                }
+                Liste liste = liste.get(indexSm(ls[i].getACell(j).getValue()));
+                for (int k = 0; k < liste.lenghtList(); k++) {
+                    if (liste.getACell(k).getValue().getType() == mode
+                            && !alreadyCheck.contains(liste.getACell(k).getValue().getName())) {
+                        alreadyCheck.add((liste.getACell(k).getValue().getName()));
+                        counter[i]++;
+                    }
+                }
+            }
+            alreadyCheck = new ArrayList<String>();;
+        }
+        if (counter[0] > counter[1]) {
+            return sm1;
+        } else if (counter[1] > counter[0]) {
+            return sm2;
+        }
+        return ;
+    }*/
+    
+
+ 
+    
+    
+    
+    
+    
     
 }
