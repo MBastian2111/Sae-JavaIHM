@@ -26,7 +26,7 @@ public class Input {
             java.io.InputStream is = new java.io.FileInputStream(name_file);
             listeNoeuds = insertNoeud(is);
             is.close();
-            //System.out.println(listeNoeuds);
+            System.out.println(listeNoeuds);
         }
         catch(FileNotFoundException e){
             System.out.println("Le fichier n'existe pas !");

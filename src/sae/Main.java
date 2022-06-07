@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import sae.Ecran.EcranPrincipal;
+import sae.Ecran.Splash_Form;
 
 /**
  *
@@ -23,9 +25,31 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File filePath = new File("Z:\\Mes documents\\NetBeansProjects\\SAE\\src\\sae\\aled.csv");
+        File filePath = new File("src\\sae\\fichier\\Fichier.csv");
         Input inp = new Input(filePath);
         System.out.println(inp.getListeLocalite());
+        
+        Splash_Form obj = new Splash_Form();
+        obj.setVisible(true);
+
+        try {
+            for (int i = 0; i <= 100; i = i + 1) {
+
+                Thread.sleep(30);
+                obj.jPercent.setText(Integer.toString(i) + "%");
+                obj.jProgressBarLoad.setValue(i);
+
+                if (i == 100) {
+                    obj.jLoadLabel.setText("Chargement terminé");
+                    Thread.sleep(2000);
+                    obj.dispose();
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        EcranPrincipal mainScreen = new EcranPrincipal();
+        mainScreen.setVisible(true);
     }
 
 }
