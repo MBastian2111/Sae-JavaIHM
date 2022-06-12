@@ -6,11 +6,15 @@ package sae.Ecran;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.LinkedList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import sae.OptionsControls;
 import sae.Ouverture.Input;
 import sae.function.Function;
@@ -49,8 +53,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         mapDemo.revalidate();
 
         int compteurChoix = 0;
-        
-        
+
         this.jAutoroute.setVisible(false);
         this.jNationale.setVisible(false);
         this.jDepartementale.setVisible(false);
@@ -68,8 +71,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         jGastronomique.setEnabled(false);
         jCulturelle.setEnabled(false);
         jOuverte.setEnabled(false);
-        
-        
+
         String choix1 = comboVilleDepart1.getSelectedItem().toString();
         String choix2 = comboVilleDepart2.getSelectedItem().toString();
         if (!(choix1 == "Chargement...") && !(choix2 == "Chargement...")) {
@@ -92,6 +94,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         controlPanel = new javax.swing.JPanel();
         filterPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -104,27 +107,22 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         jVille = new javax.swing.JCheckBox();
         jRestaurant = new javax.swing.JCheckBox();
         jLoisir = new javax.swing.JCheckBox();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
         PanelDistance = new javax.swing.JPanel();
         PointOrigine = new javax.swing.JLabel();
         comboVilleDepart = new javax.swing.JComboBox<>();
-        jSeparator2 = new javax.swing.JSeparator();
-        AffichageDist = new javax.swing.JLabel();
         jVoisin1 = new javax.swing.JCheckBox();
         j2d = new javax.swing.JCheckBox();
         jActiverFiltreD = new javax.swing.JCheckBox();
         PanelDistance1 = new javax.swing.JPanel();
         PointOrigine1 = new javax.swing.JLabel();
         comboVilleDepart1 = new javax.swing.JComboBox<>();
-        jSeparator3 = new javax.swing.JSeparator();
-        Comparer = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jGastronomique = new javax.swing.JCheckBox();
-        jCulturelle = new javax.swing.JCheckBox();
-        jOuverte = new javax.swing.JCheckBox();
         PointOrigine2 = new javax.swing.JLabel();
         comboVilleDepart2 = new javax.swing.JComboBox<>();
+        jGastronomique = new javax.swing.JRadioButton();
+        jOuverte = new javax.swing.JRadioButton();
+        jCulturelle = new javax.swing.JRadioButton();
+        jCompare = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jNbrD = new javax.swing.JLabel();
         jNbrN = new javax.swing.JLabel();
@@ -132,9 +130,13 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         jNbrV = new javax.swing.JLabel();
         jNbrR = new javax.swing.JLabel();
         jNbrL = new javax.swing.JLabel();
-        mapPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        comboVilleDepart3 = new javax.swing.JComboBox<>();
+        comboVilleDepart4 = new javax.swing.JComboBox<>();
+        mapPanel = new javax.swing.JPanel();
         infoLabel = new javax.swing.JLabel();
         positionLabel = new javax.swing.JLabel();
         mapDemo = new javax.swing.JPanel();
@@ -143,10 +145,16 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         setTitle("SAE GRAMA");
         setBackground(new java.awt.Color(102, 102, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/sae_icon.png")));
+        setMinimumSize(new java.awt.Dimension(1310, 700));
+        setPreferredSize(new java.awt.Dimension(1310, 700));
+        setResizable(false);
 
         controlPanel.setMaximumSize(new java.awt.Dimension(350, 75));
         controlPanel.setMinimumSize(new java.awt.Dimension(350, 575));
         controlPanel.setPreferredSize(new java.awt.Dimension(350, 75));
+
+        filterPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Affichage Simple"));
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
@@ -237,8 +245,6 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         });
         jPanel2.add(jLoisir);
 
-        jSeparator1.setToolTipText("Affichage simple");
-
         javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
         filterPanel.setLayout(filterPanelLayout);
         filterPanelLayout.setHorizontalGroup(
@@ -249,15 +255,11 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
-            .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         filterPanelLayout.setVerticalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filterPanelLayout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,9 +268,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                 .addContainerGap())
         );
 
-        jSeparator1.getAccessibleContext().setAccessibleDescription("");
-
-        jLabel1.setText("Affichage simple");
+        PanelDistance.setBorder(javax.swing.BorderFactory.createTitledBorder("Affichage Distance"));
 
         PointOrigine.setText("Choix point de d'origine :");
 
@@ -278,10 +278,6 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                 comboVilleDepartActionPerformed(evt);
             }
         });
-
-        jSeparator2.setToolTipText("Affichage simple");
-
-        AffichageDist.setText("Affichage distance");
 
         jVoisin1.setText("Voisins");
         jVoisin1.addItemListener(new java.awt.event.ItemListener() {
@@ -318,11 +314,6 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         PanelDistance.setLayout(PanelDistanceLayout);
         PanelDistanceLayout.setHorizontalGroup(
             PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDistanceLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(AffichageDist)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSeparator2)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistanceLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(PointOrigine)
@@ -332,7 +323,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
             .addGroup(PanelDistanceLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jActiverFiltreD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jVoisin1)
                 .addGap(18, 18, 18)
                 .addComponent(j2d, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,10 +332,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         PanelDistanceLayout.setVerticalGroup(
             PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDistanceLayout.createSequentialGroup()
-                .addComponent(AffichageDist)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(39, 39, 39)
                 .addGroup(PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboVilleDepart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PointOrigine, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -353,97 +341,107 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                     .addComponent(jVoisin1)
                     .addComponent(j2d)
                     .addComponent(jActiverFiltreD))
-                .addGap(0, 49, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
-        jSeparator2.getAccessibleContext().setAccessibleName("Affichage ");
+        PanelDistance1.setBorder(javax.swing.BorderFactory.createTitledBorder("Comparaison"));
 
         PointOrigine1.setText("Choix première localité :");
 
         comboVilleDepart1.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
-        comboVilleDepart1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboVilleDepart1ActionPerformed(evt);
+        comboVilleDepart1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboVilleDepart1ItemStateChanged(evt);
             }
         });
-
-        jSeparator3.setToolTipText("Affichage simple");
-
-        Comparer.setText("Comparer");
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 3, 0, 7));
-
-        jGastronomique.setText("Gastronomique");
-        jGastronomique.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jGastronomiqueActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jGastronomique);
-
-        jCulturelle.setText("Culturelle");
-        jCulturelle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCulturelleActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jCulturelle);
-
-        jOuverte.setText("Ouverte");
-        jOuverte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jOuverteActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jOuverte);
 
         PointOrigine2.setText("Choix seconde localité :");
 
         comboVilleDepart2.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+        comboVilleDepart2.setEnabled(false);
+        comboVilleDepart2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboVilleDepart2ItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(jGastronomique);
+        jGastronomique.setText("Gastronomique");
+        jGastronomique.setEnabled(false);
+        jGastronomique.addActionListener(this::ButtonGroup1ItemStateChanged);
+
+        buttonGroup1.add(jOuverte);
+        jOuverte.setText("Ouverte");
+        jOuverte.setEnabled(false);
+        jOuverte.addActionListener(this::ButtonGroup1ItemStateChanged);
+
+        buttonGroup1.add(jCulturelle);
+        jCulturelle.setText("Culturelle");
+        jCulturelle.setEnabled(false);
+        jCulturelle.addActionListener(this::ButtonGroup1ItemStateChanged);
+
+        jCompare.setText("Comparer");
+        jCompare.setEnabled(false);
+        jCompare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCompareActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelDistance1Layout = new javax.swing.GroupLayout(PanelDistance1);
         PanelDistance1.setLayout(PanelDistance1Layout);
         PanelDistance1Layout.setHorizontalGroup(
             PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator3)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistance1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(PointOrigine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comboVilleDepart1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(243, 243, 243))
             .addGroup(PanelDistance1Layout.createSequentialGroup()
                 .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDistance1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(Comparer))
-                    .addGroup(PanelDistance1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(PointOrigine2)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(comboVilleDepart2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelDistance1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelDistance1Layout.createSequentialGroup()
+                                .addComponent(jGastronomique)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCulturelle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jOuverte))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelDistance1Layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jCompare)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelDistance1Layout.setVerticalGroup(
             PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistance1Layout.createSequentialGroup()
-                .addComponent(Comparer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboVilleDepart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PointOrigine1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PointOrigine1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboVilleDepart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PointOrigine2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboVilleDepart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jGastronomique)
+                    .addComponent(jCulturelle)
+                    .addComponent(jOuverte))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCompare))
         );
 
         jCheckBox1.setText("Afficher Nombre");
@@ -465,6 +463,62 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
 
         jNbrL.setText("jLabel9");
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Vérification Distance 2"));
+
+        jLabel2.setText("Choix première localité :");
+
+        jLabel3.setText("Choix seconde localité :");
+
+        jLabel4.setText("En attente...");
+
+        comboVilleDepart3.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+        comboVilleDepart3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboVilleDepart3ItemStateChanged(evt);
+            }
+        });
+
+        comboVilleDepart4.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+        comboVilleDepart4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboVilleDepart4ItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboVilleDepart4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(comboVilleDepart3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(comboVilleDepart3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(comboVilleDepart4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jLabel4))
+        );
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -473,39 +527,36 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelDistance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelDistance1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(controlPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jNbrL, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(jNbrD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jNbrL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jNbrD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jNbrN, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(jNbrV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jNbrN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jNbrV, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jNbrA, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jNbrR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jNbrR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelDistance1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jNbrD)
                     .addComponent(jNbrN)
@@ -515,11 +566,12 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                     .addComponent(jNbrV)
                     .addComponent(jNbrR)
                     .addComponent(jNbrL))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelDistance1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.WEST);
@@ -528,12 +580,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         mapPanel.setMinimumSize(new java.awt.Dimension(25, 25));
         mapPanel.setPreferredSize(new java.awt.Dimension(25, 25));
 
-        jLabel2.setText("Nombre :");
-        jLabel2.setVisible(false);
-
-        jLabel3.setText("0");
-        jLabel3.setVisible(false);
-
+        infoLabel.setVisible(false);
         infoLabel.setText("Nom");
 
         positionLabel.setText("X/Y");
@@ -543,22 +590,17 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapPanelLayout.createSequentialGroup()
-                .addContainerGap(1098, Short.MAX_VALUE)
+                .addGap(353, 353, 353)
+                .addComponent(positionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 667, Short.MAX_VALUE)
                 .addComponent(infoLabel)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel2)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel3)
-                .addGap(31, 31, 31)
-                .addComponent(positionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(191, 191, 191))
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapPanelLayout.createSequentialGroup()
                 .addGap(0, 12, Short.MAX_VALUE)
                 .addGroup(mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(infoLabel)
                     .addComponent(positionLabel)))
         );
@@ -576,7 +618,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         );
         mapDemoLayout.setVerticalGroup(
             mapDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 593, Short.MAX_VALUE)
         );
 
         getContentPane().add(mapDemo, java.awt.BorderLayout.CENTER);
@@ -608,30 +650,13 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         }
     }//GEN-LAST:event_jShowTypeVilleActionPerformed
 
-    private void jGastronomiqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGastronomiqueActionPerformed
-        
-    }//GEN-LAST:event_jGastronomiqueActionPerformed
-
-    private void jOuverteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOuverteActionPerformed
-        
-    }//GEN-LAST:event_jOuverteActionPerformed
-
-    private void jCulturelleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCulturelleActionPerformed
-        
-    }//GEN-LAST:event_jCulturelleActionPerformed
-
-    private void comboVilleDepart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVilleDepart1ActionPerformed
-
-    }//GEN-LAST:event_comboVilleDepart1ActionPerformed
-
     private void jVilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVilleActionPerformed
 
     }//GEN-LAST:event_jVilleActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (jCheckBox1.isSelected()) {
-            jLabel2.setVisible(true);
-            jLabel3.setVisible(true);
+
             jNbrD.setVisible(true);
             jNbrN.setVisible(true);
             jNbrA.setVisible(true);
@@ -639,8 +664,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
             jNbrR.setVisible(true);
             jNbrL.setVisible(true);
         } else {
-            jLabel2.setVisible(false);
-            jLabel3.setVisible(false);
+
             jNbrD.setVisible(false);
             jNbrN.setVisible(false);
             jNbrA.setVisible(false);
@@ -651,7 +675,11 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void comboVilleDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVilleDepartActionPerformed
-
+        String ville = comboVilleDepart.getSelectedItem().toString();
+        if (ville.equals("Chargement...")) {
+            return;
+        }
+        EcranPrincipal.instance.optionsControls.showVoisins = new ShowVoisins(Helper.getLocalite(ville));
     }//GEN-LAST:event_comboVilleDepartActionPerformed
 
     private void jDepartementaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDepartementaleActionPerformed
@@ -697,7 +725,11 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     }//GEN-LAST:event_jAutorouteItemStateChanged
 
     private void jActiverFiltreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jActiverFiltreDActionPerformed
-        // TODO add your handling code here:
+        if (jActiverFiltreD.isSelected()) {
+            jCheckBox1.setEnabled(false);
+        } else {
+            jCheckBox1.setEnabled(true);
+        }
     }//GEN-LAST:event_jActiverFiltreDActionPerformed
 
     private void jActiverFiltreDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jActiverFiltreDItemStateChanged
@@ -715,6 +747,8 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         } else {
             j2d.setEnabled(false);
             jVoisin1.setEnabled(false);
+            j2d.setSelected(false);
+            jVoisin1.setSelected(false);
             optionsControls.showVoisins = null;
         }
     }//GEN-LAST:event_jActiverFiltreDItemStateChanged
@@ -729,7 +763,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
 
     private void j2dItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_j2dItemStateChanged
         EcranPrincipal.instance.optionsControls.showVoisin2 = ((evt.getStateChange() == 1));
-        if(j2d.isSelected() == (true)){
+        if (j2d.isSelected()) {
             jVoisin1.setSelected(true);
             EcranPrincipal.instance.optionsControls.showVoisin1 = ((evt.getStateChange() == 1));
         } else {
@@ -737,6 +771,112 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
             jVoisin1.setSelected(false);
         }
     }//GEN-LAST:event_j2dItemStateChanged
+
+    private void jCompareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCompareActionPerformed
+        Object source = Helper.getSelectedButtonText(buttonGroup1);
+        String ville1 = comboVilleDepart1.getSelectedItem().toString();
+        String ville2 = comboVilleDepart2.getSelectedItem().toString();
+        Function fct = new Function(new LinkedList<>(slate.noeuds));
+        JDialog d = new JDialog(this, "dialog Box");
+
+        // create a label
+        JLabel l = null;
+
+        if (source == jGastronomique) {
+            String res = fct._comparerGastronomie(ville1, ville2);
+            if (res.equalsIgnoreCase("Egalité")) {
+                l = new JLabel("Les deux villes sont autant gastronomiques", SwingConstants.CENTER);
+            } else {
+                l = new JLabel("La ville " + res + " est la plus gastronomique", SwingConstants.CENTER);
+            }
+        } else if (source == jCulturelle) {
+            String res = fct._comparerCulture(ville1, ville2);
+            if (res.equalsIgnoreCase("Egalité")) {
+                l = new JLabel("Les deux villes sont autant culturelles", SwingConstants.CENTER);
+            } else {
+                l = new JLabel("La ville " + res + " est la plus culturelle", SwingConstants.CENTER);
+            }
+            System.out.println("C " + fct._comparerCulture(ville1, ville2));
+        } else if (source == jOuverte) {
+            String res = fct._comparerOuverture(ville1, ville2);
+            if (res.equalsIgnoreCase("Egalité")) {
+                l = new JLabel("Les deux villes sont autant ouvertes", SwingConstants.CENTER);
+            } else {
+                l = new JLabel("La ville " + res + " est la plus ouverte", SwingConstants.CENTER);
+            }
+        }
+
+        d.add(l);
+        // setsize of dialog
+        d.setSize(400, 100);
+        d.setLocation(getX() + (getWidth() / 2) - (400 / 2), getY() + (getHeight() / 2) - (100 / 2));
+        // set visibility of dialog
+        d.setVisible(true);
+    }//GEN-LAST:event_jCompareActionPerformed
+
+    private void comboVilleDepart1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboVilleDepart1ItemStateChanged
+        String choix = comboVilleDepart1.getSelectedItem().toString();
+        if (choix.equals("Chargement...")) {
+            comboVilleDepart2.setEnabled(false);
+            comboVilleDepart2.setSelectedIndex(0);
+            EcranPrincipal.instance.optionsControls.firstComparaison = "";
+            comboVilleDepart2.setModel(new Function(new LinkedList<>(slate.show)).getModel());
+        } else {
+            comboVilleDepart2.setEnabled(true);
+            EcranPrincipal.instance.optionsControls.firstComparaison = choix;
+            comboVilleDepart2.setModel(new Function(new LinkedList<>(slate.show)).getComparaisonModel());
+        }
+    }//GEN-LAST:event_comboVilleDepart1ItemStateChanged
+
+    private void comboVilleDepart2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboVilleDepart2ItemStateChanged
+        String choix = comboVilleDepart2.getSelectedItem().toString();
+        if (choix.equals("Chargement...")) {
+            jGastronomique.setEnabled(false);
+            jCulturelle.setEnabled(false);
+            jOuverte.setEnabled(false);
+            jCompare.setEnabled(false);
+            buttonGroup1.clearSelection();
+        } else {
+            jGastronomique.setEnabled(true);
+            jCulturelle.setEnabled(true);
+            jOuverte.setEnabled(true);
+        }
+    }//GEN-LAST:event_comboVilleDepart2ItemStateChanged
+
+    private void comboVilleDepart3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboVilleDepart3ItemStateChanged
+        String choix = comboVilleDepart3.getSelectedItem().toString();
+        if (choix.equals("Chargement...")) {
+            jLabel4.setText("En attente...");
+            comboVilleDepart4.setEnabled(false);
+            comboVilleDepart4.setSelectedIndex(0);
+            comboVilleDepart4.setModel(new Function(new LinkedList<>(slate.noeuds)).getModel());
+        } else {
+            comboVilleDepart4.setEnabled(true);
+            comboVilleDepart4.setModel(new Function(new LinkedList<>(slate.noeuds)).getModel());
+        }
+    }//GEN-LAST:event_comboVilleDepart3ItemStateChanged
+
+    private void comboVilleDepart4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboVilleDepart4ItemStateChanged
+        String choix = comboVilleDepart4.getSelectedItem().toString();
+        if (choix.equals("Chargement...")) {
+            jLabel4.setText("En attente...");
+        } else {
+            Function fct = new Function(new LinkedList<>(slate.noeuds));
+            Boolean verif = fct.vérificationdistance2(comboVilleDepart3.getSelectedItem().toString(), choix);
+            if (verif) {
+                jLabel4.setText("Les localités sont à deux distances");
+            } else {
+                jLabel4.setText("Les localités ne sont pas à deux distances");
+            }
+        }
+    }//GEN-LAST:event_comboVilleDepart4ItemStateChanged
+
+    private void ButtonGroup1ItemStateChanged(java.awt.event.ActionEvent evt) {
+        Object source = evt.getSource();
+        if (source == jGastronomique || source == jCulturelle || source == jOuverte) {
+            jCompare.setEnabled(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -774,16 +914,17 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AffichageDist;
-    private javax.swing.JLabel Comparer;
     private javax.swing.JPanel PanelDistance;
     private javax.swing.JPanel PanelDistance1;
     private javax.swing.JLabel PointOrigine;
     private javax.swing.JLabel PointOrigine1;
     private javax.swing.JLabel PointOrigine2;
+    public javax.swing.ButtonGroup buttonGroup1;
     public javax.swing.JComboBox<String> comboVilleDepart;
     public javax.swing.JComboBox<String> comboVilleDepart1;
     public javax.swing.JComboBox<String> comboVilleDepart2;
+    public javax.swing.JComboBox<String> comboVilleDepart3;
+    public javax.swing.JComboBox<String> comboVilleDepart4;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel filterPanel;
     private javax.swing.JLabel infoLabel;
@@ -791,12 +932,13 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     private javax.swing.JCheckBox jActiverFiltreD;
     private javax.swing.JCheckBox jAutoroute;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCulturelle;
+    public javax.swing.JButton jCompare;
+    public javax.swing.JRadioButton jCulturelle;
     private javax.swing.JCheckBox jDepartementale;
-    private javax.swing.JCheckBox jGastronomique;
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JRadioButton jGastronomique;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JCheckBox jLoisir;
     private javax.swing.JCheckBox jNationale;
     public javax.swing.JLabel jNbrA;
@@ -805,14 +947,12 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     public javax.swing.JLabel jNbrN;
     public javax.swing.JLabel jNbrR;
     public javax.swing.JLabel jNbrV;
-    private javax.swing.JCheckBox jOuverte;
+    public javax.swing.JRadioButton jOuverte;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JCheckBox jRestaurant;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToggleButton jShowTypeRoute;
     private javax.swing.JToggleButton jShowTypeVille;
     private javax.swing.JCheckBox jVille;
