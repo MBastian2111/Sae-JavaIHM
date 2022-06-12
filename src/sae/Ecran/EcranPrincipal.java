@@ -6,36 +6,81 @@ package sae.Ecran;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
+import java.util.LinkedList;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import sae.OptionsControls;
+import sae.Ouverture.Input;
+import sae.function.Function;
+
+import sae.Helper;
+import sae.donnees.ShowVoisins;
+import sae.donnees.TLocalite;
 
 /**
  *
  * @author Administrateur
  */
-public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
+public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, InformationPoint {
+
+    public static EcranPrincipal instance;
+    public final OptionsControls optionsControls = new OptionsControls();
+
+    public final Slate slate;
+
+    public final Function fct;
 
     /**
      * Creates new form EcranPrincipal
      */
     public EcranPrincipal() {
+        instance = this;
+
         initComponents();
         Dimension dimension = new Dimension(mapDemo.getWidth(), mapDemo.getHeight());
-        JPanel slate = new Slate(dimension, this);
+        Input input = new Input(new File("src\\sae\\fichier\\Fichier.csv"));
+        slate = new Slate(dimension, this, input.getListeLocalite(), this);
+        fct = new Function();
+
         mapDemo.removeAll();
         mapDemo.add(slate);
         mapDemo.revalidate();
+
+        int compteurChoix = 0;
         
-        this.j2d.setVisible(false);
-        this.j3d.setVisible(false);
-        this.jVoisin.setVisible(false);
+        
         this.jAutoroute.setVisible(false);
         this.jNationale.setVisible(false);
         this.jDepartementale.setVisible(false);
         this.jRestaurant.setVisible(false);
         this.jLoisir.setVisible(false);
         this.jVille.setVisible(false);
+        jNbrD.setVisible(false);
+        jNbrN.setVisible(false);
+        jNbrA.setVisible(false);
+        jNbrV.setVisible(false);
+        jNbrR.setVisible(false);
+        jNbrL.setVisible(false);
+        j2d.setEnabled(false);
+        jVoisin1.setEnabled(false);
+        jGastronomique.setEnabled(false);
+        jCulturelle.setEnabled(false);
+        jOuverte.setEnabled(false);
+        
+        
+        String choix1 = comboVilleDepart1.getSelectedItem().toString();
+        String choix2 = comboVilleDepart2.getSelectedItem().toString();
+        if (!(choix1 == "Chargement...") && !(choix2 == "Chargement...")) {
+            jGastronomique.setEnabled(true);
+            jOuverte.setEnabled(true);
+            jCulturelle.setEnabled(true);
+            revalidate();
+        }
 
         this.pack();
+
     }
 
     /**
@@ -50,21 +95,48 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
         controlPanel = new javax.swing.JPanel();
         filterPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jShowDistance = new javax.swing.JToggleButton();
         jShowTypeRoute = new javax.swing.JToggleButton();
         jShowTypeVille = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
-        jVoisin = new javax.swing.JCheckBox();
-        j2d = new javax.swing.JCheckBox();
-        j3d = new javax.swing.JCheckBox();
         jDepartementale = new javax.swing.JCheckBox();
         jNationale = new javax.swing.JCheckBox();
         jAutoroute = new javax.swing.JCheckBox();
         jVille = new javax.swing.JCheckBox();
         jRestaurant = new javax.swing.JCheckBox();
         jLoisir = new javax.swing.JCheckBox();
-        positionLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        PanelDistance = new javax.swing.JPanel();
+        PointOrigine = new javax.swing.JLabel();
+        comboVilleDepart = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        AffichageDist = new javax.swing.JLabel();
+        jVoisin1 = new javax.swing.JCheckBox();
+        j2d = new javax.swing.JCheckBox();
+        jActiverFiltreD = new javax.swing.JCheckBox();
+        PanelDistance1 = new javax.swing.JPanel();
+        PointOrigine1 = new javax.swing.JLabel();
+        comboVilleDepart1 = new javax.swing.JComboBox<>();
+        jSeparator3 = new javax.swing.JSeparator();
+        Comparer = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jGastronomique = new javax.swing.JCheckBox();
+        jCulturelle = new javax.swing.JCheckBox();
+        jOuverte = new javax.swing.JCheckBox();
+        PointOrigine2 = new javax.swing.JLabel();
+        comboVilleDepart2 = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jNbrD = new javax.swing.JLabel();
+        jNbrN = new javax.swing.JLabel();
+        jNbrA = new javax.swing.JLabel();
+        jNbrV = new javax.swing.JLabel();
+        jNbrR = new javax.swing.JLabel();
+        jNbrL = new javax.swing.JLabel();
         mapPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        infoLabel = new javax.swing.JLabel();
+        positionLabel = new javax.swing.JLabel();
         mapDemo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,15 +148,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
         controlPanel.setMinimumSize(new java.awt.Dimension(350, 575));
         controlPanel.setPreferredSize(new java.awt.Dimension(350, 75));
 
-        jPanel1.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
-
-        jShowDistance.setText("Montrer distance :");
-        jShowDistance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jShowDistanceActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jShowDistance);
+        jPanel1.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
         jShowTypeRoute.setText("Montrer routes :");
         jShowTypeRoute.addActionListener(new java.awt.event.ActionListener() {
@@ -102,34 +166,78 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
         });
         jPanel1.add(jShowTypeVille);
 
-        jPanel2.setLayout(new java.awt.GridLayout(3, 3, 0, 7));
+        jPanel2.setLayout(new java.awt.GridLayout(2, 3, 0, 7));
 
-        jVoisin.setText("Voisins");
-        jPanel2.add(jVoisin);
-
-        j2d.setText("à 2 D");
-        jPanel2.add(j2d);
-
-        j3d.setText("à 3 D");
-        jPanel2.add(j3d);
-
+        jDepartementale.setSelected(true);
         jDepartementale.setText("D");
+        jDepartementale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jDepartementaleItemStateChanged(evt);
+            }
+        });
+        jDepartementale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDepartementaleActionPerformed(evt);
+            }
+        });
         jPanel2.add(jDepartementale);
 
+        jNationale.setSelected(true);
         jNationale.setText("N");
+        jNationale.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jNationaleItemStateChanged(evt);
+            }
+        });
         jPanel2.add(jNationale);
 
+        jAutoroute.setSelected(true);
         jAutoroute.setText("A    ");
+        jAutoroute.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jAutorouteItemStateChanged(evt);
+            }
+        });
         jPanel2.add(jAutoroute);
 
+        jVille.setSelected(true);
         jVille.setText("V");
+        jVille.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jVilleItemStateChanged(evt);
+            }
+        });
+        jVille.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jVilleActionPerformed(evt);
+            }
+        });
         jPanel2.add(jVille);
 
+        jRestaurant.setSelected(true);
         jRestaurant.setText("R");
+        jRestaurant.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRestaurantItemStateChanged(evt);
+            }
+        });
+        jRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRestaurantActionPerformed(evt);
+            }
+        });
         jPanel2.add(jRestaurant);
 
+        jLoisir.setSelected(true);
         jLoisir.setText("L");
+        jLoisir.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jLoisirItemStateChanged(evt);
+            }
+        });
         jPanel2.add(jLoisir);
+
+        jSeparator1.setToolTipText("Affichage simple");
 
         javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
         filterPanel.setLayout(filterPanelLayout);
@@ -138,20 +246,224 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
             .addGroup(filterPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
+            .addGroup(filterPanelLayout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         filterPanelLayout.setVerticalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filterPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filterPanelLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        positionLabel.setText("X/Y");
+        jSeparator1.getAccessibleContext().setAccessibleDescription("");
+
+        jLabel1.setText("Affichage simple");
+
+        PointOrigine.setText("Choix point de d'origine :");
+
+        comboVilleDepart.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+        comboVilleDepart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboVilleDepartActionPerformed(evt);
+            }
+        });
+
+        jSeparator2.setToolTipText("Affichage simple");
+
+        AffichageDist.setText("Affichage distance");
+
+        jVoisin1.setText("Voisins");
+        jVoisin1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jVoisin1ItemStateChanged(evt);
+            }
+        });
+        jVoisin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jVoisin1ActionPerformed(evt);
+            }
+        });
+
+        j2d.setText("à 2 D");
+        j2d.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                j2dItemStateChanged(evt);
+            }
+        });
+
+        jActiverFiltreD.setText("Activer ?");
+        jActiverFiltreD.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jActiverFiltreDItemStateChanged(evt);
+            }
+        });
+        jActiverFiltreD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jActiverFiltreDActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelDistanceLayout = new javax.swing.GroupLayout(PanelDistance);
+        PanelDistance.setLayout(PanelDistanceLayout);
+        PanelDistanceLayout.setHorizontalGroup(
+            PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelDistanceLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(AffichageDist)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistanceLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PointOrigine)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboVilleDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+            .addGroup(PanelDistanceLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jActiverFiltreD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jVoisin1)
+                .addGap(18, 18, 18)
+                .addComponent(j2d, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        PanelDistanceLayout.setVerticalGroup(
+            PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelDistanceLayout.createSequentialGroup()
+                .addComponent(AffichageDist)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboVilleDepart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PointOrigine, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelDistanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jVoisin1)
+                    .addComponent(j2d)
+                    .addComponent(jActiverFiltreD))
+                .addGap(0, 49, Short.MAX_VALUE))
+        );
+
+        jSeparator2.getAccessibleContext().setAccessibleName("Affichage ");
+
+        PointOrigine1.setText("Choix première localité :");
+
+        comboVilleDepart1.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+        comboVilleDepart1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboVilleDepart1ActionPerformed(evt);
+            }
+        });
+
+        jSeparator3.setToolTipText("Affichage simple");
+
+        Comparer.setText("Comparer");
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 3, 0, 7));
+
+        jGastronomique.setText("Gastronomique");
+        jGastronomique.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jGastronomiqueActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jGastronomique);
+
+        jCulturelle.setText("Culturelle");
+        jCulturelle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCulturelleActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jCulturelle);
+
+        jOuverte.setText("Ouverte");
+        jOuverte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jOuverteActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jOuverte);
+
+        PointOrigine2.setText("Choix seconde localité :");
+
+        comboVilleDepart2.setModel(new DefaultComboBoxModel<>(new String[] { "Chargement..." }));
+
+        javax.swing.GroupLayout PanelDistance1Layout = new javax.swing.GroupLayout(PanelDistance1);
+        PanelDistance1.setLayout(PanelDistance1Layout);
+        PanelDistance1Layout.setHorizontalGroup(
+            PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistance1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PointOrigine1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboVilleDepart1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(243, 243, 243))
+            .addGroup(PanelDistance1Layout.createSequentialGroup()
+                .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDistance1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(Comparer))
+                    .addGroup(PanelDistance1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(PointOrigine2)
+                        .addGap(14, 14, 14)
+                        .addComponent(comboVilleDepart2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelDistance1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelDistance1Layout.setVerticalGroup(
+            PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDistance1Layout.createSequentialGroup()
+                .addComponent(Comparer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboVilleDepart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PointOrigine1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelDistance1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PointOrigine2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboVilleDepart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jCheckBox1.setText("Afficher Nombre");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jNbrD.setText("jLabel4");
+
+        jNbrN.setText("jLabel5");
+
+        jNbrA.setText("jLabel6");
+
+        jNbrV.setText("jLabel7");
+
+        jNbrR.setText("jLabel8");
+
+        jNbrL.setText("jLabel9");
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -159,50 +471,108 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(positionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelDistance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelDistance1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jNbrL, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                    .addComponent(jNbrD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jNbrN, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                    .addComponent(jNbrV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jNbrA, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jNbrR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(positionLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jNbrD)
+                    .addComponent(jNbrN)
+                    .addComponent(jNbrA))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jNbrV)
+                    .addComponent(jNbrR)
+                    .addComponent(jNbrL))
+                .addGap(10, 10, 10)
+                .addComponent(PanelDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(PanelDistance1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
 
-        getContentPane().add(controlPanel, java.awt.BorderLayout.EAST);
+        getContentPane().add(controlPanel, java.awt.BorderLayout.WEST);
 
         mapPanel.setMaximumSize(new java.awt.Dimension(850, 25));
         mapPanel.setMinimumSize(new java.awt.Dimension(25, 25));
         mapPanel.setPreferredSize(new java.awt.Dimension(25, 25));
 
+        jLabel2.setText("Nombre :");
+        jLabel2.setVisible(false);
+
+        jLabel3.setText("0");
+        jLabel3.setVisible(false);
+
+        infoLabel.setText("Nom");
+
+        positionLabel.setText("X/Y");
+
         javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapPanelLayout.createSequentialGroup()
+                .addContainerGap(1098, Short.MAX_VALUE)
+                .addComponent(infoLabel)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel3)
+                .addGap(31, 31, 31)
+                .addComponent(positionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapPanelLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(infoLabel)
+                    .addComponent(positionLabel)))
         );
 
         getContentPane().add(mapPanel, java.awt.BorderLayout.SOUTH);
 
-        mapDemo.setMaximumSize(new java.awt.Dimension(500, 300));
-        mapDemo.setMinimumSize(new java.awt.Dimension(500, 300));
-        mapDemo.setPreferredSize(new java.awt.Dimension(500, 300));
+        mapDemo.setMinimumSize(new java.awt.Dimension(960, 540));
+        mapDemo.setPreferredSize(new java.awt.Dimension(960, 540));
 
         javax.swing.GroupLayout mapDemoLayout = new javax.swing.GroupLayout(mapDemo);
         mapDemo.setLayout(mapDemoLayout);
         mapDemoLayout.setHorizontalGroup(
             mapDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         mapDemoLayout.setVerticalGroup(
             mapDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,29 +584,11 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jShowDistanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowDistanceActionPerformed
-        if (!jShowDistance.isSelected()) {
-            jVoisin.setVisible(false);
-            j2d.setVisible(false);
-            j3d.setVisible(false);
-            jVoisin.setSelected(false);
-            j2d.setSelected(false);
-            j3d.setSelected(false);
-        } else {
-            jVoisin.setVisible(true);
-            j2d.setVisible(true);
-            j3d.setVisible(true);
-        }
-    }//GEN-LAST:event_jShowDistanceActionPerformed
-
     private void jShowTypeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowTypeRouteActionPerformed
         if (!jShowTypeRoute.isSelected()) {
             jDepartementale.setVisible(false);
             jNationale.setVisible(false);
             jAutoroute.setVisible(false);
-            jDepartementale.setSelected(false);
-            jNationale.setSelected(false);
-            jAutoroute.setSelected(false);
         } else {
             jDepartementale.setVisible(true);
             jNationale.setVisible(true);
@@ -249,15 +601,142 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
             jVille.setVisible(false);
             jRestaurant.setVisible(false);
             jLoisir.setVisible(false);
-            jVille.setSelected(false);
-            jRestaurant.setSelected(false);
-            jLoisir.setSelected(false);
         } else {
             jVille.setVisible(true);
             jRestaurant.setVisible(true);
             jLoisir.setVisible(true);
         }
     }//GEN-LAST:event_jShowTypeVilleActionPerformed
+
+    private void jGastronomiqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGastronomiqueActionPerformed
+        
+    }//GEN-LAST:event_jGastronomiqueActionPerformed
+
+    private void jOuverteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOuverteActionPerformed
+        
+    }//GEN-LAST:event_jOuverteActionPerformed
+
+    private void jCulturelleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCulturelleActionPerformed
+        
+    }//GEN-LAST:event_jCulturelleActionPerformed
+
+    private void comboVilleDepart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVilleDepart1ActionPerformed
+
+    }//GEN-LAST:event_comboVilleDepart1ActionPerformed
+
+    private void jVilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVilleActionPerformed
+
+    }//GEN-LAST:event_jVilleActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            jLabel2.setVisible(true);
+            jLabel3.setVisible(true);
+            jNbrD.setVisible(true);
+            jNbrN.setVisible(true);
+            jNbrA.setVisible(true);
+            jNbrV.setVisible(true);
+            jNbrR.setVisible(true);
+            jNbrL.setVisible(true);
+        } else {
+            jLabel2.setVisible(false);
+            jLabel3.setVisible(false);
+            jNbrD.setVisible(false);
+            jNbrN.setVisible(false);
+            jNbrA.setVisible(false);
+            jNbrV.setVisible(false);
+            jNbrR.setVisible(false);
+            jNbrL.setVisible(false);
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void comboVilleDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVilleDepartActionPerformed
+
+    }//GEN-LAST:event_comboVilleDepartActionPerformed
+
+    private void jDepartementaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDepartementaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDepartementaleActionPerformed
+
+    private void jRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRestaurantActionPerformed
+
+    }//GEN-LAST:event_jRestaurantActionPerformed
+
+    private void jDepartementaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jDepartementaleItemStateChanged
+        EcranPrincipal.instance.optionsControls.departementales = ((evt.getStateChange() == 1));
+
+    }//GEN-LAST:event_jDepartementaleItemStateChanged
+
+    private void jVilleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jVilleItemStateChanged
+        EcranPrincipal.instance.optionsControls.villes = ((evt.getStateChange() == 1));
+        EcranPrincipal.instance.comboVilleDepart.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart1.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart2.setModel(new Function(new LinkedList(slate.show)).getModel());
+    }//GEN-LAST:event_jVilleItemStateChanged
+
+    private void jRestaurantItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRestaurantItemStateChanged
+        EcranPrincipal.instance.optionsControls.restaurant = ((evt.getStateChange() == 1));
+        EcranPrincipal.instance.comboVilleDepart.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart1.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart2.setModel(new Function(new LinkedList(slate.show)).getModel());
+    }//GEN-LAST:event_jRestaurantItemStateChanged
+
+    private void jLoisirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jLoisirItemStateChanged
+        EcranPrincipal.instance.optionsControls.loisirs = ((evt.getStateChange() == 1));
+        EcranPrincipal.instance.comboVilleDepart.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart1.setModel(new Function(new LinkedList(slate.show)).getModel());
+        EcranPrincipal.instance.comboVilleDepart2.setModel(new Function(new LinkedList(slate.show)).getModel());
+    }//GEN-LAST:event_jLoisirItemStateChanged
+
+    private void jNationaleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jNationaleItemStateChanged
+        EcranPrincipal.instance.optionsControls.nationales = ((evt.getStateChange() == 1));
+    }//GEN-LAST:event_jNationaleItemStateChanged
+
+    private void jAutorouteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jAutorouteItemStateChanged
+        EcranPrincipal.instance.optionsControls.autoroutes = ((evt.getStateChange() == 1));
+    }//GEN-LAST:event_jAutorouteItemStateChanged
+
+    private void jActiverFiltreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jActiverFiltreDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jActiverFiltreDActionPerformed
+
+    private void jActiverFiltreDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jActiverFiltreDItemStateChanged
+
+        if (jActiverFiltreD.isSelected()) {
+            j2d.setEnabled(true);
+            jVoisin1.setEnabled(true);
+            String target = comboVilleDepart.getSelectedItem().toString();
+            TLocalite localite = Helper.getLocalite(target);
+            if (localite == null) {
+                optionsControls.showVoisins = null;
+                return;
+            }
+            optionsControls.showVoisins = new ShowVoisins(localite);
+        } else {
+            j2d.setEnabled(false);
+            jVoisin1.setEnabled(false);
+            optionsControls.showVoisins = null;
+        }
+    }//GEN-LAST:event_jActiverFiltreDItemStateChanged
+
+    private void jVoisin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVoisin1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jVoisin1ActionPerformed
+
+    private void jVoisin1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jVoisin1ItemStateChanged
+        EcranPrincipal.instance.optionsControls.showVoisin1 = ((evt.getStateChange() == 1));
+    }//GEN-LAST:event_jVoisin1ItemStateChanged
+
+    private void j2dItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_j2dItemStateChanged
+        EcranPrincipal.instance.optionsControls.showVoisin2 = ((evt.getStateChange() == 1));
+        if(j2d.isSelected() == (true)){
+            jVoisin1.setSelected(true);
+            EcranPrincipal.instance.optionsControls.showVoisin1 = ((evt.getStateChange() == 1));
+        } else {
+            j2d.setSelected(false);
+            jVoisin1.setSelected(false);
+        }
+    }//GEN-LAST:event_j2dItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -295,22 +774,49 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AffichageDist;
+    private javax.swing.JLabel Comparer;
+    private javax.swing.JPanel PanelDistance;
+    private javax.swing.JPanel PanelDistance1;
+    private javax.swing.JLabel PointOrigine;
+    private javax.swing.JLabel PointOrigine1;
+    private javax.swing.JLabel PointOrigine2;
+    public javax.swing.JComboBox<String> comboVilleDepart;
+    public javax.swing.JComboBox<String> comboVilleDepart1;
+    public javax.swing.JComboBox<String> comboVilleDepart2;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel filterPanel;
+    private javax.swing.JLabel infoLabel;
     private javax.swing.JCheckBox j2d;
-    private javax.swing.JCheckBox j3d;
+    private javax.swing.JCheckBox jActiverFiltreD;
     private javax.swing.JCheckBox jAutoroute;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCulturelle;
     private javax.swing.JCheckBox jDepartementale;
+    private javax.swing.JCheckBox jGastronomique;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JCheckBox jLoisir;
     private javax.swing.JCheckBox jNationale;
+    public javax.swing.JLabel jNbrA;
+    public javax.swing.JLabel jNbrD;
+    public javax.swing.JLabel jNbrL;
+    public javax.swing.JLabel jNbrN;
+    public javax.swing.JLabel jNbrR;
+    public javax.swing.JLabel jNbrV;
+    private javax.swing.JCheckBox jOuverte;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JCheckBox jRestaurant;
-    private javax.swing.JToggleButton jShowDistance;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToggleButton jShowTypeRoute;
     private javax.swing.JToggleButton jShowTypeVille;
     private javax.swing.JCheckBox jVille;
-    private javax.swing.JCheckBox jVoisin;
+    private javax.swing.JCheckBox jVoisin1;
     private javax.swing.JPanel mapDemo;
     private javax.swing.JPanel mapPanel;
     private javax.swing.JLabel positionLabel;
@@ -324,5 +830,10 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer {
         } else {
             positionLabel.setVisible(false);
         }
+    }
+
+    @Override
+    public void infoPoint(String infoPrLabel) {
+        infoLabel.setText(infoPrLabel);
     }
 }
