@@ -147,12 +147,20 @@ public class Function {
         return nombre;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ComboBoxModel<String> getModel() {
         List<String> options = liste.stream().map(TLocalite::getNom).collect(Collectors.toList());
         options.add(0, "Chargement...");
         return new DefaultComboBoxModel<>(options.toArray(String[]::new));
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ComboBoxModel<String> getComparaisonModel() {
         List<String> options = liste.stream().filter((o) -> o.getType() == TLocalite.TypeLocalite.V).map(TLocalite::getNom).collect(Collectors.toList());
         options.add(0, "Chargement...");
@@ -406,6 +414,7 @@ public class Function {
         return dist1;
     }
 
+    /*
     //Méthode permettant d'afficher toutes les localités selon leur type demandé à un distance du lieu demandé
     public ArrayList<String> distance1(String lieu, String typeChercher) {
         int num = 0;
@@ -443,7 +452,9 @@ public class Function {
         }
         return dist2;
     }
+    */
 
+    /*
     //Méthode permettant d'afficher les localités à 2 ditances du lieu demandé
     public ArrayList<String> distance2(String lieu) {
         int num = 0;
@@ -486,7 +497,7 @@ public class Function {
             num++;
         }
         return res;
-    }
+    }*/
 
     /*
     //Méthode permettant d'afficher les localités selon le type cherché à 2 ditances du lieu demandé

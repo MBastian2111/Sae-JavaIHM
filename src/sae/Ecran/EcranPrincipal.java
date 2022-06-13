@@ -12,9 +12,11 @@ import java.util.LinkedList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import sae.OptionsControls;
 import sae.Ouverture.Input;
 import sae.function.Function;
@@ -32,7 +34,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     public static EcranPrincipal instance;
     public final OptionsControls optionsControls = new OptionsControls();
 
-    public final Slate slate;
+    public Slate slate;
 
     public final Function fct;
 
@@ -140,14 +142,17 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         infoLabel = new javax.swing.JLabel();
         positionLabel = new javax.swing.JLabel();
         mapDemo = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jOuvrir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SAE GRAMA");
         setBackground(new java.awt.Color(102, 102, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/sae_icon.png")));
-        setMinimumSize(new java.awt.Dimension(1310, 700));
-        setPreferredSize(new java.awt.Dimension(1310, 700));
+        setMinimumSize(new java.awt.Dimension(1310, 720));
+        setPreferredSize(new java.awt.Dimension(1310, 720));
         setResizable(false);
 
         controlPanel.setMaximumSize(new java.awt.Dimension(350, 75));
@@ -299,6 +304,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         });
 
         jActiverFiltreD.setText("Activer ?");
+        jActiverFiltreD.setEnabled(false);
         jActiverFiltreD.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jActiverFiltreDItemStateChanged(evt);
@@ -543,9 +549,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jNbrA, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jNbrR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(controlPanelLayout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jCheckBox1)))
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelDistance1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -556,7 +560,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
                 .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jNbrD)
                     .addComponent(jNbrN)
@@ -618,10 +622,30 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         );
         mapDemoLayout.setVerticalGroup(
             mapDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 593, Short.MAX_VALUE)
+            .addGap(0, 575, Short.MAX_VALUE)
         );
 
         getContentPane().add(mapDemo, java.awt.BorderLayout.CENTER);
+
+        jMenu1.setText("File");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jOuvrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jOuvrir.setText("Ouvrir");
+        jOuvrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jOuvrirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jOuvrir);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -675,11 +699,17 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void comboVilleDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVilleDepartActionPerformed
-        String ville = comboVilleDepart.getSelectedItem().toString();
-        if (ville.equals("Chargement...")) {
+        String choix = comboVilleDepart.getSelectedItem().toString();
+        if (choix.equals("Chargement...")) {
+            jActiverFiltreD.setEnabled(false);
+            jActiverFiltreD.setSelected(false);
+            j2d.setSelected(false);
+            jVoisin1.setSelected(false);
             return;
+        } else {
+            jActiverFiltreD.setEnabled(true);
         }
-        EcranPrincipal.instance.optionsControls.showVoisins = new ShowVoisins(Helper.getLocalite(ville));
+        EcranPrincipal.instance.optionsControls.showVoisins = new ShowVoisins(Helper.getLocalite(choix));
     }//GEN-LAST:event_comboVilleDepartActionPerformed
 
     private void jDepartementaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDepartementaleActionPerformed
@@ -727,6 +757,12 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     private void jActiverFiltreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jActiverFiltreDActionPerformed
         if (jActiverFiltreD.isSelected()) {
             jCheckBox1.setEnabled(false);
+            jNbrA.setVisible(false);
+            jNbrD.setVisible(false);
+            jNbrN.setVisible(false);
+            jNbrV.setVisible(false);
+            jNbrR.setVisible(false);
+            jNbrL.setVisible(false);
         } else {
             jCheckBox1.setEnabled(true);
         }
@@ -759,17 +795,22 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
 
     private void jVoisin1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jVoisin1ItemStateChanged
         EcranPrincipal.instance.optionsControls.showVoisin1 = ((evt.getStateChange() == 1));
+        if (!jVoisin1.isSelected() && j2d.isSelected()){
+            j2d.setSelected(false);
+        }
     }//GEN-LAST:event_jVoisin1ItemStateChanged
 
     private void j2dItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_j2dItemStateChanged
         EcranPrincipal.instance.optionsControls.showVoisin2 = ((evt.getStateChange() == 1));
         if (j2d.isSelected()) {
             jVoisin1.setSelected(true);
+            
             EcranPrincipal.instance.optionsControls.showVoisin1 = ((evt.getStateChange() == 1));
         } else {
             j2d.setSelected(false);
             jVoisin1.setSelected(false);
         }
+        
     }//GEN-LAST:event_j2dItemStateChanged
 
     private void jCompareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCompareActionPerformed
@@ -871,6 +912,30 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
         }
     }//GEN-LAST:event_comboVilleDepart4ItemStateChanged
 
+    private void jOuvrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOuvrirActionPerformed
+        File file = null;
+        JFileChooser chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Fichier CSV (*csv)", "csv"));
+        chooser.setApproveButtonText("Ouvrir");
+        chooser.setDialogTitle("Ouvrir");
+        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+                  file = chooser.getSelectedFile();
+        } else {
+            System.out.println("File access cancelled by user");
+        }
+        Dimension dimension = new Dimension(mapDemo.getWidth(), mapDemo.getHeight());
+        //Input input = new Input(file);
+        //slate = new Slate(dimension, this, file.getListeLocalite(), this);
+    }//GEN-LAST:event_jOuvrirActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
     private void ButtonGroup1ItemStateChanged(java.awt.event.ActionEvent evt) {
         Object source = evt.getSource();
         if (source == jGastronomique || source == jCulturelle || source == jOuverte) {
@@ -940,6 +1005,8 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JCheckBox jLoisir;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JCheckBox jNationale;
     public javax.swing.JLabel jNbrA;
     public javax.swing.JLabel jNbrD;
@@ -948,6 +1015,7 @@ public class EcranPrincipal extends javax.swing.JFrame implements IDrawer, Infor
     public javax.swing.JLabel jNbrR;
     public javax.swing.JLabel jNbrV;
     public javax.swing.JRadioButton jOuverte;
+    private javax.swing.JMenuItem jOuvrir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
