@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SAEGRAMA1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sae-java-ihm/dist/SAEGRAMA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

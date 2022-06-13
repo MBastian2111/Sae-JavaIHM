@@ -35,17 +35,18 @@ public class Main {
         try {
             for (int i = 0; i <= 100; i = i + 1) {
 
-                Thread.sleep(30);
-                obj.jPercent.setText(Integer.toString(i) + "%");
+                Thread.sleep(5);
+                obj.jPercent.setText(i + "%");
                 obj.jProgressBarLoad.setValue(i);
 
                 if (i == 100) {
                     obj.jLoadLabel.setText("Chargement terminé");
-                    Thread.sleep(2000);
+                    Thread.sleep(0);
                     obj.dispose();
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         EcranPrincipal mainScreen = new EcranPrincipal();

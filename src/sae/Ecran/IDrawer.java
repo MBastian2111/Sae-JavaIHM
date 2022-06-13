@@ -18,4 +18,6 @@ public interface IDrawer {
      * @param point Correspond à la nouvelle position de la souris
      */
     public void mouseAt(Point point);
+    
+    
 }

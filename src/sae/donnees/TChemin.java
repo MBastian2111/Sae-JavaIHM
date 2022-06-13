@@ -5,25 +5,19 @@
  */
 package sae.donnees;
 
+import java.awt.*;
+
 /**
  *
  * @author p2100635
  */
 public class TChemin {
-    private final String type_route;
+    private final TypeRoute typeRoute;
     private final int distance;
     private String arrive;
-    
-
-    public TChemin(String type_route, int distance, String arrive) {
-        this.type_route = type_route;
-        this.distance = distance;
-        this.arrive = arrive;
-    }
-
 
     public TChemin(String type_route, String distance, String arrive) {
-        this.type_route = type_route;
+        this.typeRoute = TypeRoute.getTypeRoute(type_route);
         this.distance = Integer.parseInt(distance);
         this.arrive = arrive;
     }
@@ -36,22 +30,43 @@ public class TChemin {
         this.arrive = arrive;
     }
 
-    public String getType_route() {
-        return type_route;
+    public TypeRoute getType_route() {
+        return typeRoute;
     }
 
     public int getDistance() {
         return distance;
     }
 
-    
-    
+
+    public enum TypeRoute {
+        Autre("Inconnu", Color.GRAY),
+        D("Départementale", Color.RED),
+        N("Nationale", Color.GREEN),
+        A("Autoroutes", Color.BLUE);
+
+        public final String nom;
+        public final Color couleur;
+
+        TypeRoute(String nom, Color couleur) {
+            this.nom = nom;
+            this.couleur = couleur;
+        }
+
+        public static TypeRoute getTypeRoute(String nom) {
+            for (TypeRoute typeRoute : TypeRoute.values()) {
+                if (typeRoute.name().equalsIgnoreCase(nom)) {
+                    return typeRoute;
+                }
+            }
+            return TypeRoute.Autre;
+        }
+
+    }
     
     
     @Override
     public String toString() {
-        return " Suivant{" + "type de route=" + type_route + ", distance=" + distance + ", arrive=" + arrive + '}';
+        return " Suivant{" + "type de route=" + typeRoute + ", distance=" + distance + ", arrive=" + arrive + '}';
     }
-
-    
 }

@@ -5,6 +5,7 @@
  */
 package sae.donnees;
 
+import java.awt.Color;
 import java.util.LinkedList;
 
 /**
@@ -13,19 +14,27 @@ import java.util.LinkedList;
  */
 public class TLocalite {
     private final String nom;
-    private final String type;
+    private final TypeLocalite type;
     private LinkedList<TChemin> voisin;
+    private int posX;
+    private int posY;
 
     public TLocalite(String nom, String type, LinkedList<TChemin> voisin) {
         this.nom = nom;
-        this.type = type;
+        this.type = TypeLocalite.getTypeLocalite(type);
+        //System.out.println(nom + " " + this.type.name());
         this.voisin = voisin;
+        this.posX = 0;
+        this.posY = 0;
     }
 
     public TLocalite(String type, String nom) {
         this.nom = nom;
-        this.type = type;
+        this.type = TypeLocalite.getTypeLocalite(type);
+        //System.out.println(nom + " " + this.type.name());
         this.voisin = new LinkedList();
+        this.posX = 0;
+        this.posY = 0;
     }
 
     public LinkedList<TChemin> getVoisin() {
@@ -44,10 +53,48 @@ public class TLocalite {
         return nom;
     }
 
-    public String getType() {
+    public TypeLocalite getType() {
         return type;
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public enum TypeLocalite {
+        Autre("Inconnu"),
+        V("Villes"),
+        R("Restaurants"),
+        L("Loisirs");
+
+        public final String nom;
+
+        TypeLocalite(String nom) {
+            this.nom = nom;
+        }
+
+        public static TypeLocalite getTypeLocalite(String nom) {
+            for (TypeLocalite typeLocalite : TypeLocalite.values()) {
+                if (typeLocalite.name().equalsIgnoreCase(nom)) {
+                    return typeLocalite;
+                }
+            }
+            return Autre;
+        }
+
+    }
     
     
     

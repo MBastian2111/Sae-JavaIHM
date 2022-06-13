@@ -6,6 +6,15 @@
 package sae;
 
 import java.io.File;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import sae.Ecran.EcranPrincipal;
+import sae.donnees.TChemin;
+import sae.donnees.TLocalite;
 
 /**
  *
@@ -13,36 +22,43 @@ import java.io.File;
  */
 public class Helper {
 
-    public static String getResourcePath(String fileName) {
-       final File f = new File("");
-       final String dossierPath = f.getAbsolutePath() + File.separator + fileName;
-       return dossierPath;
+    public static Predicate<TChemin> chemin(OptionsControls option) {
+        return (TChemin c) -> {
+            if (c.getType_route() == TChemin.TypeRoute.D && option.departementales) return true;
+            if (c.getType_route() == TChemin.TypeRoute.A && option.autoroutes) return true;
+            if (c.getType_route() == TChemin.TypeRoute.N && option.nationales) return true;
+            return true;
+        };
     }
+    
+    public static <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+        return list.stream().filter(predicate).collect(Collectors.toList());
+    }
+    
+    public static Predicate<TLocalite> localite(OptionsControls option) {
+        return (TLocalite l) -> {
+            if (l.getType() == TLocalite.TypeLocalite.V && option.villes) return true;
+            if (l.getType() == TLocalite.TypeLocalite.R && option.restaurant) return true;
+            if (l.getType() == TLocalite.TypeLocalite.L && option.loisirs) return true;
+            return true;
+        };
+    }
+    
+    public static TLocalite getLocalite(String nom) {
+        TLocalite localite = EcranPrincipal.instance.slate.getNoeuds().stream()
+                .filter((tLocalite) -> (tLocalite.getNom().equals(nom))).findFirst().orElse(null);
+        return localite;
+    }
+    
+    public static AbstractButton getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
 
-   public static File getResource(String fileName) {
-       final String completeFileName = getResourcePath(fileName);
-       File file = new File(completeFileName);
-       return file;
-   }
-   private final static String FILE_NAME = "src/test/resources/chien-test-01.csv";
-
-
-    public void testGetResource() {
-        // Paramètres
-        final String fileName = FILE_NAME;
-
-        // Resultat
-        // ...
-
-        // Appel
-        final File file = Helper.getResource(fileName);
-
-        // Test
-        // On sait que le fichier existe bien puisque c'est avec lui qu'on travaille depuis le début.
-        assertTrue(file.exists());
+            if (button.isSelected()) {
+                return button;
+            }
         }
 
-        private void assertTrue(boolean exists) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 }
